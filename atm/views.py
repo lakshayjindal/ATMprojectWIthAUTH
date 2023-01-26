@@ -1,23 +1,26 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from service.models import database
-
+# from django.contrib import auth
+# from django.contrib.auth import user_logged_in, user_logged_out, user_login_failed
 # Create your views here.
 name = ""
-# def verify(request):
-    # if request.method == "POST":
-    #     acc = request.POST.get('acc')
-    #     pin = request.POST.get('pin')
-    #     obj = database.objects.get(accountNumber = acc)
-    # return render(request, 'verify.html', {'verified':False})
+def verify(request):
+    if request.method == "POST":
+        acc = request.POST.get('acc')
+        pin = request.POST.get('pin')
+        obj = database.objects.get(accountNumber = acc)
+        # if obj 
+    return render(request, 'verify.html', {'verified':False})
 def index(request):
-    # if request.method == 'POST':
-    #     acc = request.POST.get('acc')
-    #     pin = request.POST.get('pin')
-    #     refer = database.objects.get(pk = acc)
-        
-
-    return render(request, 'index.html')
+    params = {'verified': 'False'}
+    if request.method == 'POST':
+        acc = request.POST.get('acc')
+        pin = request.POST.get('pin')
+        refer = database.objects.get(accountNumber = acc, pin = pin)
+        if refer:
+            return render(request, 'index.html')
+    return render(request, 'verify.html', params)
         
     # return render(request, 'verify.html')
 def addMoney(request):
